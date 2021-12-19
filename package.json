@@ -1,0 +1,22 @@
+{
+    "name": "mini-webpack",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev:mini-webpack": "nodemon debugger.js",
+        "test:mini-webpack": "node ./dist/index.js"
+    },
+    "nodemonConfig": {
+        "ignore": [
+            "dist/*"
+        ]
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.14.8",
+        "@babel/parser": "^7.14.8",
+        "@babel/preset-env": "^7.14.8",
+        "@babel/traverse": "^7.14.8",
+        "nodemon": "^2.0.12"
+    }
+}
