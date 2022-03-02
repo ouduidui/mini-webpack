@@ -17,6 +17,7 @@
     "@babel/parser": "^7.14.8",
     "@babel/preset-env": "^7.14.8",
     "@babel/traverse": "^7.14.8",
+    "jest": "^27.5.1",
     "nodemon": "^2.0.12"
   }
 }

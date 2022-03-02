@@ -1,3 +1,3 @@
-import { something } from './b.js';
+import { something } from './utils/b.js';
 
 export const msg = `Hello ${something}`;
