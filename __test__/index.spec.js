@@ -1,6 +1,7 @@
 const Webpack = require('../lib/index');
 const path = require('path');
 const jsonLoader = require('./loader/jsonLoader.js');
+const TestPlugin = require('./plugin/testPlugin.js');
 
 const entry = './__test__/example/index.js';
 const output = {
@@ -17,6 +18,8 @@ const loaders = {
   ]
 };
 
+const plugins = [new TestPlugin()];
+
 describe('webpack', () => {
   it('test', () => {
     expect(true).toBe(true);
@@ -25,7 +28,8 @@ describe('webpack', () => {
   const wp = new Webpack({
     entry,
     output,
-    module: loaders
+    module: loaders,
+    plugins
   });
 
   it('constructor', () => {
