@@ -1,1 +1,3 @@
-export const something = 'World';
+import data from './data.json';
+
+export const something = data.msg;

@@ -1,10 +1,20 @@
 const Webpack = require('../lib/index');
 const path = require('path');
+const jsonLoader = require('./loader/jsonLoader.js');
 
 const entry = './__test__/example/index.js';
 const output = {
   path: path.resolve(__dirname, './dist'),
   filename: 'index.js'
+};
+
+const loaders = {
+  rules: [
+    {
+      test: /.json$/,
+      use: [jsonLoader]
+    }
+  ]
 };
 
 describe('webpack', () => {
@@ -14,7 +24,8 @@ describe('webpack', () => {
 
   const wp = new Webpack({
     entry,
-    output
+    output,
+    module: loaders
   });
 
   it('constructor', () => {
@@ -34,41 +45,24 @@ describe('webpack', () => {
   });
 
   it('parseModules', () => {
-    expect(wp.parseModules(entry)).toEqual({
+    expect(wp.parseModules(entry)).toMatchObject({
       [entry]: {
         deps: {
           './a.js': './__test__/example/a.js'
-        },
-        code: '"use strict";\n\nvar _a = require("./a.js");\n\nconsole.log(_a.msg);'
+        }
       },
       './__test__/example/a.js': {
         deps: {
           './utils/b.js': './__test__/example/utils/b.js'
-        },
-        code:
-          '"use strict";\n' +
-          '\n' +
-          'Object.defineProperty(exports, "__esModule", {\n' +
-          '  value: true\n' +
-          '});\n' +
-          'exports.msg = void 0;\n' +
-          '\n' +
-          'var _b = require("./utils/b.js");\n' +
-          '\n' +
-          'var msg = "Hello ".concat(_b.something);\n' +
-          'exports.msg = msg;'
+        }
       },
       './__test__/example/utils/b.js': {
-        deps: {},
-        code:
-          '"use strict";\n' +
-          '\n' +
-          'Object.defineProperty(exports, "__esModule", {\n' +
-          '  value: true\n' +
-          '});\n' +
-          'exports.something = void 0;\n' +
-          "var something = 'World';\n" +
-          'exports.something = something;'
+        deps: {
+          './data.json': './__test__/example/utils/data.json'
+        }
+      },
+      './__test__/example/utils/data.json': {
+        deps: {}
       }
     });
   });
